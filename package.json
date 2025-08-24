@@ -1,0 +1,16 @@
+{
+  "name": "crime_portal_v2",
+  "version": "1.0.0",
+  "description": "updated version of crime reporting portal ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mayank Tripathi",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.0"
+  }
+}
