@@ -17,7 +17,7 @@ app.use(express.json());
 //connecting the database when server is started 
 connectDB();
 
-app.get("/", async() => {
+app.get("/", async(req,res) => {
     res.status(200).json({
         message: "The API is working all right !!!"
     });
