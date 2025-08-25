@@ -24,7 +24,7 @@ app.get("/", async(req,res) => {
     });
 });
 
-app.post("/api/users", userRoutes);
+app.use("/api/users", userRoutes);//all routes related to user
 
 const port = process.env.PORT || 8000;
 app.listen(port, () =>{
