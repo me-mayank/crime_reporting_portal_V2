@@ -7,31 +7,31 @@ import userRoutes from "../routes/user.routes.js";
 const app = express();
 
 // loading environment variables
-dotenv.config({path: "./env"});
+dotenv.config({ path: "./env" });
 
 //enabling cors for all origins
-app.use(cors({origin: "*"}));
+app.use(cors({ origin: "*" }));
 
 // middleware to parse and send json request and response
 app.use(express.json());
 
-//connecting the database when server is started 
+//connecting the database when server is started
 connectDB();
 
-app.get("/", async(req,res) => {
-    res.status(200).json({
-        message: "The API is working all right !!!"
-    });
+app.get("/", async (req, res) => {
+  res.status(200).json({
+    message: "The API is working all right !!!",
+  });
 });
 
-app.use("/api/test", async(req,res) => {
-    console.log("Test endpoint hit", req.body);
-    res.json({ message: "Test successful", data: req.body });
+app.use("/api/test", async (req, res) => {
+  console.log("Test endpoint hit", req.body);
+  res.json({ message: "Test successful", data: req.body });
 });
 
-app.use("/api/users", userRoutes);//all routes related to user
+app.use("/api/user", userRoutes); //all routes related to user
 
 const port = process.env.PORT || 8000;
-app.listen(port, () =>{
-     console.log(`SERVER IS RUNNING ON PORT: ${port}`);
+app.listen(port, () => {
+  console.log(`SERVER IS RUNNING ON PORT: ${port}`);
 });
