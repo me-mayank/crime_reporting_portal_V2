@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 
 //create a new user
 export const registerUser = async(req,res) => {
+    console.log("register endpoint hit with body: ", req.body);
     try{
        const {name, gender, email, password, role} = req.body;
        
