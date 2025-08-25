@@ -24,6 +24,11 @@ app.get("/", async(req,res) => {
     });
 });
 
+app.use("/api/test", async(req,res) => {
+    console.log("Test endpoint hit", req.body);
+    res.json({ message: "Test successful", data: req.body });
+});
+
 app.use("/api/users", userRoutes);//all routes related to user
 
 const port = process.env.PORT || 8000;
