@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 import cors from "cors";
+import userRoutes from "../routes/user.routes.js";
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.get("/", async(req,res) => {
         message: "The API is working all right !!!"
     });
 });
+
+app.post("/api/users", userRoutes);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () =>{
