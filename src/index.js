@@ -31,7 +31,7 @@ app.use("/api/test", async (req, res) => {
 });
 
 app.use("/api/user", userRoutes); //all routes related to user
-app.use("api/report", reportRoutes); // all routes related to reports
+app.use("/api/report", reportRoutes); // all routes related to reports
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
