@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 import cors from "cors";
 import userRoutes from "../routes/user.routes.js";
+import reportRoutes from "../routes/report.routes.js";
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/api/test", async (req, res) => {
 });
 
 app.use("/api/user", userRoutes); //all routes related to user
+app.use("api/report", reportRoutes); // all routes related to reports
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

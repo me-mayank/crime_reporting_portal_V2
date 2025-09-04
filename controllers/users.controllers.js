@@ -1,4 +1,5 @@
 import { User } from "../models/user.model.js";
+import { Report } from "../models/report.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -93,7 +94,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-//get user profile
+//get user profile+reports filled by the user
 export const getProfile = async (req, res) => {
   try {
     //req.user is already given by protect middleware
@@ -103,9 +104,18 @@ export const getProfile = async (req, res) => {
       });
     }
 
+    //finding all the reports filled by the user
+    const reports = await Report.find({ filter: req.user._id }).select(
+      "_id title createdAt"
+    );
+
     res.status(200).json({
       message: "Profile fetched successfully !!!",
       user: req.user,
+      reports: {
+        count: reports.length,
+        list: reports,
+      },
     });
   } catch (error) {
     res.status(500).json({
