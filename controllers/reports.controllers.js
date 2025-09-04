@@ -24,3 +24,17 @@ export const createReport = async (req, res) => {
     });
   }
 };
+
+export const getAllReports = async (req, res) => {
+  try {
+    const reports = await Report.find().populate("reporter", "name email");
+    res.status(200).json({
+      message: "All reports fetched successfully",
+      reports,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error while fetching reports !!!",
+    });
+  }
+};
