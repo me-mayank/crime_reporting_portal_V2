@@ -65,8 +65,6 @@ export const reportStatusUpdate = async (req, res) => {
 
     status = status.toLowerCase();
 
-    const oldstatus = status;
-
     if (!["open", "pending", "closed"].includes(status)) {
       return res.status(400).json({
         message: "Invalid Status Value",
@@ -82,6 +80,7 @@ export const reportStatusUpdate = async (req, res) => {
     }
 
     //now once we have got the report now updating its status
+    const oldstatus = report.status;
     report.status = status; // updating the old status with new one
     await report.save(); // saving it to the database
 
