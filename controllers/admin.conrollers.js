@@ -86,6 +86,7 @@ export const reportStatusUpdate = async (req, res) => {
 
     res.status(200).json({
       message: `Report status of report-ID: ${reportId} changed from ${oldstatus} to ${report.status}`,
+      report,
     });
   } catch (error) {
     res.status(500).json({
