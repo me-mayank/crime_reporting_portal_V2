@@ -61,7 +61,7 @@ export const userToAdmin = async (req, res) => {
 export const reportStatusUpdate = async (req, res) => {
   try {
     const { reportId } = req.params; // extracting report id from the url
-    const { status } = req.body; // asking for the updated status
+    let { status } = req.body; // asking for the updated status
 
     status = status.toLowerCase();
 
