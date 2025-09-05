@@ -49,6 +49,13 @@ export const userToAdmin = async (req, res) => {
 
     res.status(200).json({
       message: `User with User-ID:${userId} has been promoted to ADMIN`,
+      user: {
+        id: user._id,
+        name: user.name,
+        gender: user.gender,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (error) {
     res.status(500).json({
