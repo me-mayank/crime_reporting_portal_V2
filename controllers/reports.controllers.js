@@ -67,9 +67,9 @@ export const searchReports = async (req, res) => {
       filter["location.district"] = { $regex: district, $options: "i" };
 
     if (startDate || endDate) {
-      filter.datereported = {};
-      if (startDate) filter.datereported.$gte = new Date(startDate);
-      if (endDate) filter.datereported.$lte = new Date(endDate);
+      filter.dateReported = {};
+      if (startDate) filter.dateReported.$gte = new Date(startDate);
+      if (endDate) filter.dateReported.$lte = new Date(endDate);
     }
 
     const pageNum = parseInt(page, 10) || 1;
@@ -82,7 +82,7 @@ export const searchReports = async (req, res) => {
       .limit(limitNum)
       .sort({ createdAt: -1 });
 
-    const total = Report.countDocuments(filter);
+    const total = await Report.countDocuments(filter);
 
     res.status(200).json({
       message: "Reports searched successfully",
