@@ -41,6 +41,7 @@ export const getAllReports = async (req, res) => {
 
 export const searchReports = async (req, res) => {
   try {
+    // creating filter query
     const {
       title,
       description,
@@ -55,27 +56,30 @@ export const searchReports = async (req, res) => {
       limit = 10,
     } = req.query;
 
+    //filter creation being ready
     let filter = {};
     if (title) filter.title = { $regex: title, $options: "i" };
     if (description)
       filter.description = { $regex: description, $options: "i" };
-    if (category) filter.category = category;
-    if (status) filter.status = status;
+    if (category) filter.category = category.toLowerCase();
+    if (status) filter.status = status.toLowerCase();
     if (city) filter["location.city"] = { $regex: city, $options: "i" };
     if (state) filter["location.state"] = { $regex: state, $options: "i" };
     if (district)
       filter["location.district"] = { $regex: district, $options: "i" };
-
+    // the $regex is command for search in database and the $options: "i" if for case-insentivity
     if (startDate || endDate) {
       filter.dateReported = {};
       if (startDate) filter.dateReported.$gte = new Date(startDate);
       if (endDate) filter.dateReported.$lte = new Date(endDate);
     }
 
+    //pagination logic
     const pageNum = parseInt(page, 10) || 1;
     const limitNum = parseInt(limit, 10) || 10;
     const skip = (pageNum - 1) * limitNum;
 
+    //actual search code
     const reports = await Report.find(filter)
       .populate("reporter", "name email")
       .skip(skip)
