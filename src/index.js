@@ -4,6 +4,7 @@ import connectDB from "./db/index.js";
 import cors from "cors";
 import userRoutes from "../routes/user.routes.js";
 import reportRoutes from "../routes/report.routes.js";
+import adminRoutes from "../routes/admin.routes.js";
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/api/test", async (req, res) => {
 
 app.use("/api/user", userRoutes); //all routes related to user
 app.use("/api/report", reportRoutes); // all routes related to reports
+app.use("/api/admin", adminRoutes); // all routes related to admin actions
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

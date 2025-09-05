@@ -39,6 +39,7 @@ export const getAllReports = async (req, res) => {
   }
 };
 
+//reports searching logic code
 export const searchReports = async (req, res) => {
   try {
     // creating filter query
