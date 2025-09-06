@@ -4,6 +4,7 @@ import { adminOnly } from "../middlewares/admin.middleware.js";
 import {
   adminToUser,
   deleteUser,
+  getAllUser,
   userToAdmin,
 } from "../controllers/admin.conrollers.js";
 import { reportStatusUpdate } from "../controllers/admin.conrollers.js";
@@ -25,5 +26,7 @@ router.patch(
 router.patch("/user/:userId/promote", protect, adminOnly, userToAdmin);
 // sending update request to update the user role from admin to user
 router.patch("/user/:userId/demote", protect, adminOnly, adminToUser);
+
+router.get("/user/getall", protect, adminOnly, getAllUser);
 
 export default router;

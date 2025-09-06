@@ -109,6 +109,42 @@ export const adminToUser = async (req, res) => {
   }
 };
 
+//get all user for admin to see
+export const getAllUser = async (req, res) => {
+  try {
+    const { gender, role, page = 1, limit = 10 } = req.query;
+
+    let filter = {};
+
+    if (gender) filter.gender = { $regex: gender, $option: "i" };
+    if (role) filter.role = { $regex: role, $option: "i" };
+
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const skip = (pageNum - 1) * limitNum;
+
+    const user = await User.find(filter)
+      .select("-password")
+      .skip(skip)
+      .limit(limitNum)
+      .sort({ createdAt: -1 });
+
+    const total = await User.countDocuments(filter);
+
+    res.status(200).json({
+      message: "User successfully Fetched",
+      page: pageNum,
+      totalPages: Math.ceil(total / limitNum),
+      totalUsers: total,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "INTERNAL SERVER ERROR!!",
+    });
+  }
+};
+
 // updating report status
 export const reportStatusUpdate = async (req, res) => {
   try {
