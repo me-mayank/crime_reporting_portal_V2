@@ -11,7 +11,7 @@ import { reportStatusUpdate } from "../controllers/admin.conrollers.js";
 const router = express.Router();
 
 //sending DELETE request to the database to delete user with a given userId
-router.delete("/delete-user/:userId", protect, adminOnly, deleteUser);
+router.delete("/user/delete/:userId", protect, adminOnly, deleteUser);
 
 //sending update request to update the status of the report
 router.patch(
