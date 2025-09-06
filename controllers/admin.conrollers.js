@@ -116,8 +116,8 @@ export const getAllUser = async (req, res) => {
 
     let filter = {};
 
-    if (gender) filter.gender = { $regex: gender, $option: "i" };
-    if (role) filter.role = { $regex: role, $option: "i" };
+    if (gender) filter.gender = { $regex: gender, $options: "i" };
+    if (role) filter.role = { $regex: role, $options: "i" };
 
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
@@ -136,7 +136,7 @@ export const getAllUser = async (req, res) => {
       page: pageNum,
       totalPages: Math.ceil(total / limitNum),
       totalUsers: total,
-      user,
+      users: user,
     });
   } catch (error) {
     res.status(500).json({
