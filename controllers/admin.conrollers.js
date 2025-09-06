@@ -45,7 +45,7 @@ export const userToAdmin = async (req, res) => {
 
     //updating user role
     user.role = "admin";
-    await User.save();
+    await user.save();
 
     res.status(200).json({
       message: `User with User-ID:${userId} has been promoted to ADMIN`,
