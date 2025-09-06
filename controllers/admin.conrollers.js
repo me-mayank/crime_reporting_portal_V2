@@ -64,6 +64,51 @@ export const userToAdmin = async (req, res) => {
   }
 };
 
+//demoting from admin to user
+export const adminToUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        message: `User with ID: ${userId} NOT FOUND`,
+      });
+    }
+
+    if (user.role === "user") {
+      return res.status(403).json({
+        message: "this User is already demoted from admin",
+        user: {
+          name: user.name,
+          gender: user.gender,
+          email: user.email,
+          role: user.role,
+        },
+      });
+    }
+
+    user.role = "user";
+    await user.save();
+
+    res.status(200).json({
+      message: `User with ID:${userId} demoted from Admin`,
+      user: {
+        id: user._id,
+        name: user.name,
+        gender: user.gender,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "INTERNAL SERVER ERROR WHILE DEMOTING!!!!",
+    });
+  }
+};
+
 // updating report status
 export const reportStatusUpdate = async (req, res) => {
   try {
