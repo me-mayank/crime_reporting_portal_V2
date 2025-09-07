@@ -1,43 +1,31 @@
 import { Report } from "../models/report.model.js";
 import cloudinary from "../utils/cloudinary.utils.js";
 
-// cloudinary upload helper for cleaner code
-const uploadToCloudinary = (fileBuffer) => {
-  return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      {
-        resource_type: "auto",
-        folder: "crime_evidence",
-      },
-      (error, result) => {
-        if (error) {
-          console.error("Cloudinary Upload Error", error);
-          reject(error);
-        } else {
-          resolve(result);
-        }
-      }
-    );
+// // cloudinary upload helper for cleaner code
+// const uploadToCloudinary = (fileBuffer) => {
+//   return new Promise((resolve, reject) => {
+//     const stream = cloudinary.uploader.upload_stream(
+//       {
+//         resource_type: "auto",
+//         folder: "crime_evidence",
+//       },
+//       (error, result) => {
+//         if (error) {
+//           console.error("Cloudinary Upload Error", error);
+//           reject(error);
+//         } else {
+//           resolve(result);
+//         }
+//       }
+//     );
 
-    stream.end(fileBuffer);
-  });
-};
+//     stream.end(fileBuffer);
+//   });
+// };
 
 export const createReport = async (req, res) => {
   try {
-    const { title, description, category, location } = req.body;
-
-    let evidenceFiles = [];
-    if (req.files && req.files.length > 0) {
-      for (const file of req.files) {
-        const uploadResult = await uploadToCloudinary(file.buffer);
-        evidenceFiles.push({
-          url: uploadResult.secure_url,
-          type: uploadResult.resource_type,
-          format: uploadResult.format,
-        });
-      }
-    }
+    const { title, description, category, location, evidences = [] } = req.body;
 
     // stiching all components of the report together
     const newReport = new Report({
@@ -46,7 +34,7 @@ export const createReport = async (req, res) => {
       category,
       location,
       reporter: req.user.id,
-      evidences: evidenceFiles,
+      evidences, // array of {url, type, format}
     });
 
     await newReport.save();
